@@ -1,0 +1,242 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": []
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "source": [
+        " DSE ICT 2026 paper 2 section C Q9 to python"
+      ],
+      "metadata": {
+        "id": "oTIOewIWka71"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# def\n",
+        "ht = [\n",
+        "    [5, 5, 4, 9],\n",
+        "    [1, 1, 8, 1],\n",
+        "    [0, 6, 6, 2],\n",
+        "    [7, 0, 5, 5],\n",
+        "    [7, 0, 4, 4]\n",
+        "]\n",
+        "\n",
+        "sv = [0] * m"
+      ],
+      "metadata": {
+        "id": "QNdUQoSUV56v"
+      },
+      "execution_count": 66,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 67,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 0
+        },
+        "id": "lMwJQNdyOJWO",
+        "outputId": "9ae7afdc-2d21-4c84-edea-d1058de60969"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "[9, 8, 6, 7, 7, 0]\n"
+          ]
+        }
+      ],
+      "source": [
+        "# build_sv\n",
+        "m = 5\n",
+        "n = 4\n",
+        "for i in range(m):\n",
+        "  sv[i] = 0\n",
+        "  for j in range(n):\n",
+        "    if ht[i][j] > sv[i]:\n",
+        "      sv[i] = ht[i][j]\n",
+        "print(sv)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# drawdraw_H\n",
+        "max_sv = max(sv)\n",
+        "for level in range(max_sv,0,-1):\n",
+        "  for i in range(m):\n",
+        "    if level > sv[i]:\n",
+        "      print (\" \",end=\"\")\n",
+        "    else :\n",
+        "      print (\"*\",end=\"\")\n",
+        "  print (\"\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 0
+        },
+        "collapsed": true,
+        "id": "shJzg867Wof5",
+        "outputId": "609647ad-1481-4b17-a53f-b8ade24ab667"
+      },
+      "execution_count": 41,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "  ** \n",
+            "  ** \n",
+            "  ** \n",
+            "  ** \n",
+            " *** \n",
+            " ****\n",
+            " ****\n",
+            " ****\n",
+            " ****\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# data set 2\n",
+        "ht = [\n",
+        "    [0, 5, 5, 0, 0, 0],\n",
+        "    [0, 0, 9, 9, 0, 0],\n",
+        "    [0, 0, 0, 0, 0, 0],\n",
+        "    [0, 9, 0, 4, 4, 0],\n",
+        "    [0, 0, 4, 4, 4, 0]\n",
+        "]"
+      ],
+      "metadata": {
+        "id": "5MWaXChWhS0B"
+      },
+      "execution_count": 55,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def sscore (a,b,H):\n",
+        "  smax = 0\n",
+        "  for j in range(b + 1, n):\n",
+        "    if ht[a][j] > smax:\n",
+        "      smax = ht[a][j]\n",
+        "  if H > smax:\n",
+        "    return H - smax\n",
+        "  else:\n",
+        "    return 0\n",
+        "\n",
+        "\n",
+        "result = sscore (3,2,6)\n",
+        "print (result)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 0
+        },
+        "id": "0u7lZdsSdwJy",
+        "outputId": "718c1a05-c994-4b0e-daaf-32427fc20597"
+      },
+      "execution_count": 56,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "2\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# helper function from ai\n",
+        "def avail(a, b, p, q):\n",
+        "    # Checks if the rectangular area from (a,b) with width p and length q is empty (0)\n",
+        "    for i in range(a, a + p):\n",
+        "        for j in range(b, b + q):\n",
+        "            if ht[i][j] != 0:\n",
+        "                return False\n",
+        "    return True\n",
+        "\n",
+        ""
+      ],
+      "metadata": {
+        "id": "UpIFk6MyjxII"
+      },
+      "execution_count": 65,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def max_seaview(p, q, H):\n",
+        "  smax = 0\n",
+        "  for i in range(0, m - p + 1):\n",
+        "    for j in range(0, n - q + 1):\n",
+        "      if avail(i, j, p, q):\n",
+        "        temp = 0\n",
+        "        for k in range(0, p):\n",
+        "          temp = temp + sscore(i + k, j, H)\n",
+        "        if temp > smax :\n",
+        "          smax = temp\n",
+        "  return smax\n",
+        "\n",
+        "\n",
+        "\n",
+        "ht = [\n",
+        "    [0, 0, 0, 0, 0],\n",
+        "    [5, 0, 0, 0, 0],\n",
+        "    [5, 9, 0, 4, 4],\n",
+        "    [0, 9, 0, 4, 4],\n",
+        "    [0, 0, 0, 4, 4],\n",
+        "    [0, 0, 0, 0, 0]\n",
+        "]\n",
+        "\n",
+        "result = max_seaview(2, 2, 10)\n",
+        "print(result)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 0
+        },
+        "id": "PFs2JDKoiHdG",
+        "outputId": "44c4857d-cba3-4015-a07c-db1ae8e5605a"
+      },
+      "execution_count": 63,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "20\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
